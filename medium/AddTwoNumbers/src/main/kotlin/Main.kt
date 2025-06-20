@@ -1,9 +1,5 @@
 package com.github.vkdev
 
-import java.util.LinkedList
-import javax.swing.text.html.StyleSheet
-
-
 /*
 Input: l1 = [2,4,3], l2 = [5,6,4]
 Output: [7,0,8]
@@ -33,10 +29,11 @@ fun main() {
 
     val result = Solution().addTwoNumbers(l1, l2)
 
+    System.out.println("Input:")
     l1?.let { System.out.println(nodeToString(it).reversed()) }
     l2?.let { System.out.println(nodeToString(it).reversed()) }
 
-    System.out.println("\nresult")
+    System.out.println("\nOutput:")
     result?.let { System.out.println(nodeToString(it)) }
 }
 
@@ -65,8 +62,8 @@ private fun buildNode(list: List<Int>): ListNode? {
 class Solution {
     fun addTwoNumbers(l1: ListNode?, l2: ListNode?): ListNode? {
 
-        var startNode: ListNode? = null
-        var lastNode: ListNode? = null
+        var lastNode: ListNode? = ListNode(-1) // !!!
+        val startNode: ListNode? = lastNode
 
         var l1Next = l1
         var l2Next = l2
@@ -78,22 +75,11 @@ class Solution {
             val l1Value = l1Next?.value ?: 0
             val l2Value = l2Next?.value ?: 0
 
-            val result = (l1Value + l2Value + inMemory).let {
-                if (it > 9) {
-                    inMemory = 1
-                    it - 10
-                } else {
-                    inMemory = 0
-                    it
-                }
-            }
+            val tempSum = l1Value + l2Value + inMemory
+            val result: Int = tempSum % 10
+            inMemory = tempSum / 10
 
             val newNode = ListNode(result)
-
-            if (startNode == null) {
-                startNode = newNode
-            }
-
             lastNode?.next = newNode
             lastNode = newNode
 
@@ -105,7 +91,7 @@ class Solution {
             lastNode?.next = ListNode(inMemory)
         }
 
-        return startNode
+        return startNode?.next
     }
 }
 
