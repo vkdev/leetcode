@@ -42,17 +42,20 @@ fun main(args: Array<String>) {
 
 //DCCXLIV is 766; expected 744
 //System.out.println(romanToInt("DCCXLIV"))
+//System.out.println(romanToInt2("IX"))
 
 
     val map = TestDataGenerator.generateUniquePatternRomans()
+    var isPassed = true
     map.forEach { k, v ->
-        val result = romanToInt(k)
+        val result = romanToInt2(k)
         if (result != v) {
             println("$k is $result; expected $v")
+            isPassed = false
         }
     }
 
-    println("All tests passed")
+    if (isPassed) println("All tests passed") else println("Tests failed")
 }
 
 private val symbols = mapOf<Char, Int>(
@@ -66,6 +69,27 @@ private val symbols = mapOf<Char, Int>(
 )
 
 fun symbol(char: Char) = symbols[char]!!
+
+fun romanToInt2(s: String): Int {
+    if (s.isEmpty()) return 0
+    if (s.length == 1) return symbol(s[0])
+    //Ах! я упустил, что вариант есть IX, но нет. IIX => если следующее число больше предыдущего,
+    // то мы вычитаем текущее из общей суммы, иначе – прибавляем
+    var result = 0
+    for (i in 0..s.length - 2) {
+
+        val current = symbol(s[i])
+        val next = symbol(s[i + 1])
+
+        if (next > current) {
+            result -= current
+        } else {
+            result += current
+        }
+    }
+
+    return result + symbol(s[s.length -1])
+}
 
 fun romanToInt(s: String): Int {
     if (s.isEmpty()) return 0
