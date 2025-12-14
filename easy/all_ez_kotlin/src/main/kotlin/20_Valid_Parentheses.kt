@@ -34,10 +34,10 @@ Constraints:
 1 <= s.length <= 104
 s consists of parentheses only '()[]{}'.
 * */
-class Solution {
+class ValidParentheses {
 
     companion object {
-        val solution = Solution()
+        val solution = ValidParentheses()
 
         @JvmStatic
         fun main(args: Array<String>) {
