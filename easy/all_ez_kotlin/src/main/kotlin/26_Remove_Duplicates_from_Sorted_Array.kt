@@ -43,7 +43,7 @@ fun main() {
         intArrayOf(1,1,2,2,3,3)
     )
 
-    val s = Solution()
+    val s = Remove_Duplicates_from_Sorted_Array()
     arrays.forEach {
         val array = it.copyOf()
         val size = s.removeDuplicates(array)
@@ -51,7 +51,7 @@ fun main() {
     }
 }
 
-class Solution {
+class Remove_Duplicates_from_Sorted_Array {
     fun removeDuplicates(nums: IntArray): Int {
         if(nums.size <= 1) return 1
 
